@@ -1,0 +1,72 @@
+The **Master Theorem** provides a simple and effective way to analyze the time complexity of **divide-and-conquer algorithms**. It is particularly useful for recurrences that arise in recursive algorithms where a problem is divided into smaller subproblems of the same type.
+
+### General Form of Recurrence
+
+Many divide-and-conquer algorithms can be described by a recurrence relation of the following form:
+
+\[
+T(n) = aT\left(\frac{n}{b}\right) + O(n^d)
+\]
+
+Where:
+- \( n \) is the size of the input.
+- \( a \) is the number of subproblems into which the problem is divided.
+- \( \frac{n}{b} \) is the size of each subproblem.
+- \( O(n^d) \) is the cost of dividing the problem and combining the results of the subproblems (non-recursive work).
+
+### The Three Cases of the Master Theorem
+
+To determine the time complexity of an algorithm described by this recurrence, the Master Theorem compares the cost of the recursive work (from the subproblems) and the cost of the non-recursive work (the combining step).
+
+1. **Case 1: Subproblem Work Dominates**
+   
+   If \( a > b^d \), the recursive part dominates the cost:
+   \[
+   T(n) = O(n^{\log_b{a}})
+   \]
+   This means the time complexity is primarily determined by the work done in the recursive subproblems.
+
+2. **Case 2: Recursive and Non-Recursive Work are Balanced**
+   
+   If \( a = b^d \), the work done in the recursive and non-recursive parts is balanced:
+   \[
+   T(n) = O(n^d \log n)
+   \]
+   In this case, the logarithmic factor comes from the depth of recursion.
+
+3. **Case 3: Non-Recursive Work Dominates**
+   
+   If \( a < b^d \), the non-recursive work dominates:
+   \[
+   T(n) = O(n^d)
+   \]
+   This means the time complexity is mostly determined by the non-recursive work (splitting and combining).
+
+### Applying the Master Theorem
+
+To use the Master Theorem, you need to identify the values of \( a \), \( b \), and \( d \) from the recurrence relation, and then determine which case applies based on the comparison of \( a \) and \( b^d \).
+
+### Example
+
+Consider the recurrence for **Merge Sort**:
+\[
+T(n) = 2T\left(\frac{n}{2}\right) + O(n)
+\]
+Here:
+- \( a = 2 \) (the problem is divided into 2 subproblems),
+- \( b = 2 \) (each subproblem is half the size),
+- \( d = 1 \) (the non-recursive work, merging, takes linear time \( O(n) \)).
+
+Now, we compare \( a \) and \( b^d \):
+\[
+b^d = 2^1 = 2
+\]
+Since \( a = b^d \), this falls under **Case 2** (recursive and non-recursive work are balanced). Therefore, the time complexity is:
+\[
+T(n) = O(n \log n)
+\]
+Thus, Merge Sort runs in \( O(n \log n) \) time.
+
+### Conclusion
+
+The Master Theorem is a powerful tool for analyzing the time complexity of divide-and-conquer algorithms. It simplifies the process of solving recurrences by categorizing the relationship between the recursive and non-recursive work into three cases.
